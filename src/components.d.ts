@@ -7,7 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface CountdownTracker {
-        "endDate": Date;
+        "endDate": string;
     }
 }
 declare global {
@@ -23,7 +23,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface CountdownTracker {
-        "endDate"?: Date;
+        "endDate"?: string;
     }
     interface IntrinsicElements {
         "countdown-tracker": CountdownTracker;

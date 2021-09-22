@@ -6,21 +6,24 @@ import { Component, Host, h, Prop, State } from '@stencil/core';
   shadow: true,
 })
 export class CountdownTracker {
-  @Prop() endDate: Date;
+  @Prop() endDate: string;
 
   @State() days: string = '00';
   @State() hours: string = '00';
   @State() minutes: string = '00';
   @State() seconds: string = '00';
 
+  private endDateObj: Date;
   private stopId: number;
 
   componentWillLoad() {
+    this.endDateObj = new Date(this.endDate);
     this.tick();
   }
 
   tick() {
-    const timeRemaining = this.endDate.getTime() - new Date().getTime();
+    // example value: 80834343, time in milliseconds between endDate and now
+    const timeRemaining = this.endDateObj.getTime() - new Date().getTime();
 
     if (timeRemaining < 0) {
       cancelAnimationFrame(this.stopId);
@@ -39,23 +42,23 @@ export class CountdownTracker {
     return (
       <Host>
         <div class="column">
-          <p>DAYS</p>
-          <p>{this.days}</p>
+          <p class="label">Days</p>
+          <p class="value">{this.days}</p>
         </div>
-        <p>:</p>
+        <p class="colon">:</p>
         <div class="column">
-          <p>HOURS</p>
-          <p>{this.hours}</p>
+          <p class="label">Hours</p>
+          <p class="value">{this.hours}</p>
         </div>
-        <p>:</p>
+        <p class="colon">:</p>
         <div class="column">
-          <p>MINUTES</p>
-          <p>{this.minutes}</p>
+          <p class="label">Minutes</p>
+          <p class="value">{this.minutes}</p>
         </div>
-        <p>:</p>
+        <p class="colon">:</p>
         <div class="column">
-          <p>SECONDS</p>
-          <p>{this.seconds}</p>
+          <p class="label">Seconds</p>
+          <p class="value">{this.seconds}</p>
         </div>
       </Host>
     );
